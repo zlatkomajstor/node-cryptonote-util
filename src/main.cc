@@ -96,7 +96,7 @@ Handle<Value> convert_blob(const Arguments& args) {
     if (!parse_and_validate_block_from_blob(input, b))
         return except("Failed to parse block");
 
-    if (b.major_version < BLOCK_MAJOR_VERSION_3) {
+    if (b.major_version < BLOCK_MAJOR_VERSION_2) {
         if (!get_block_hashing_blob(b, output))
             return except("Failed to create mining block");
     } else {
