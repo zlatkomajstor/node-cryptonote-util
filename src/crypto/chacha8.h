@@ -1,7 +1,3 @@
-// Copyright (c) 2012-2013 The Cryptonote developers
-// Distributed under the MIT/X11 software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
 #pragma once
 
 #include <stdint.h>
@@ -12,8 +8,12 @@
 
 #if defined(__cplusplus)
 #include <memory.h>
+#include <string>
 
 #include "hash.h"
+#include "cn_slow_hash.hpp"
+
+//using namespace cn_heavy;
 
 namespace crypto {
   extern "C" {
@@ -43,14 +43,20 @@ namespace crypto {
   inline void chacha8(const void* data, std::size_t length, const chacha8_key& key, const chacha8_iv& iv, char* cipher) {
     chacha8(data, length, reinterpret_cast<const uint8_t*>(&key), reinterpret_cast<const uint8_t*>(&iv), cipher);
   }
+  
+  inline void generate_chacha8_key(const void *data, size_t size, chacha8_key& key) {
+    static_assert(sizeof(chacha8_key) <= sizeof(hash), "Size of hash must be at least that of chacha8_key");
+	uint8_t pwd_hash[HASH_SIZE];
+	cn_pow_hash_v1 kdf_hash;
+	kdf_hash.hash(data, size, pwd_hash);
+    memcpy(&key, &pwd_hash, sizeof(key));
+    memset(&pwd_hash, 0, sizeof(pwd_hash));
+  }
 
   inline void generate_chacha8_key(std::string password, chacha8_key& key) {
-    static_assert(sizeof(chacha8_key) <= sizeof(hash), "Size of hash must be at least that of chacha8_key");
-    char pwd_hash[HASH_SIZE];
-    crypto::cn_slow_hash(password.data(), password.size(), pwd_hash);
-    memcpy(&key, pwd_hash, sizeof(key));
-    memset(pwd_hash, 0, sizeof(pwd_hash));
+	  return generate_chacha8_key(password.data(), password.size(), key);
   }
+
 }
 
 #endif

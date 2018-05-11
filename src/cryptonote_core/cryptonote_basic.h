@@ -22,6 +22,7 @@
 #include "cryptonote_config.h"
 #include "crypto/crypto.h"
 #include "crypto/hash.h"
+#include "crypto/cn_slow_hash.hpp"
 #include "misc_language.h"
 #include "tx_extra.h"
 

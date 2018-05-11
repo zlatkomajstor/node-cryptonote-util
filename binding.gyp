@@ -11,6 +11,10 @@
                 "src/crypto/crypto-ops-data.c",
                 "src/crypto/hash.c",
                 "src/crypto/keccak.c",
+                "src/crypto/keccak.c",
+				"src/crypto/cn_slow_hash_hard_intel.cpp",
+                "src/crypto/cn_slow_hash_soft.cpp",
+                "src/crypto/cn_slow_hash.hpp",
                 "src/common/base58.cpp",
             ],
             "include_dirs": [
@@ -25,7 +29,7 @@
             },
             "cflags_cc!": [ "-fno-exceptions", "-fno-rtti" ],
             "cflags_cc": [
-                  "-std=c++0x",
+                  "-std=c++11",
                   "-fexceptions",
                   "-frtti",
             ],

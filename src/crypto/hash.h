@@ -15,11 +15,10 @@ namespace crypto {
 #include "hash-ops.h"
   }
 
-#pragma pack(push, 1)
-  POD_CLASS hash {
-    char data[HASH_SIZE];
-  };
-#pragma pack(pop)
+struct hash {
+  uint8_t data[32];
+};
+
 
   static_assert(sizeof(hash) == HASH_SIZE, "Invalid structure size");
 
@@ -35,10 +34,6 @@ namespace crypto {
     hash h;
     cn_fast_hash(data, length, reinterpret_cast<char *>(&h));
     return h;
-  }
-
-  inline void cn_slow_hash(const void *data, std::size_t length, hash &hash) {
-    cn_slow_hash(data, length, reinterpret_cast<char *>(&hash));
   }
 
   inline void tree_hash(const hash *hashes, std::size_t count, hash &root_hash) {

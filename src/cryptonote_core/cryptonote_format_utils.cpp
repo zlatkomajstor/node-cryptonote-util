@@ -11,6 +11,7 @@ using namespace epee;
 #include "miner.h"
 #include "crypto/crypto.h"
 #include "crypto/hash.h"
+#include "../crypto/cn_slow_hash.hpp"
 #include "serialization/binary_utils.h"
 
 namespace cryptonote
@@ -733,10 +734,11 @@ namespace cryptonote
   //---------------------------------------------------------------
   bool get_block_longhash(const block& b, crypto::hash& res, uint64_t height)
   {
-    blobdata bd;
+    cn_pow_hash_v2 ctx;	
+	blobdata bd;
     if(!get_block_hashing_blob(b, bd))
       return false;
-    crypto::cn_slow_hash(bd.data(), bd.size(), res);
+    ctx.hash(bd.data(), bd.size(), res.data);
     return true;
   }
   //---------------------------------------------------------------
@@ -769,10 +771,11 @@ namespace cryptonote
   //---------------------------------------------------------------
   bool get_bytecoin_block_longhash(const block& b, crypto::hash& res)
   {
-    blobdata bd;
+    cn_pow_hash_v2 ctx;	
+	blobdata bd;
     if(!get_bytecoin_block_hashing_blob(b, bd))
       return false;
-    crypto::cn_slow_hash(bd.data(), bd.size(), res);
+	ctx.hash(bd.data(), bd.size(), res.data);
     return true;
   }
   //---------------------------------------------------------------
