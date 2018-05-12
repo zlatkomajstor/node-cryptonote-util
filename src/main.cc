@@ -67,11 +67,12 @@ static bool mergeBlocks(const cryptonote::block& block1, cryptonote::block& bloc
 
 static bool construct_parent_block(const cryptonote::block& b, cryptonote::block& parent_block) {
     if (b.major_version >= BLOCK_MAJOR_VERSION_4) {
-        parent_block.minor_version = 1;
+		parent_block.major_version = b.major_version;
+		parent_block.minor_version = 1;
     } else {
+		parent_block.major_version = 1;
 		parent_block.minor_version = 0;
     }
-	parent_block.major_version = 1;
     parent_block.timestamp = b.timestamp;
     parent_block.prev_id = b.prev_id;
     parent_block.nonce = b.parent_block.nonce;
