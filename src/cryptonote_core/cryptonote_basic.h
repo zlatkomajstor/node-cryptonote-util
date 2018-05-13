@@ -458,12 +458,12 @@ namespace cryptonote
     BEGIN_SERIALIZE()
       VARINT_FIELD(major_version)
       VARINT_FIELD(minor_version)
-	  if (BLOCK_MINOR_VERSION_1 == minor_version)
+      if (BLOCK_MAJOR_VERSION_1 != major_version)
       {
         VARINT_FIELD(timestamp)
       }
       FIELD(prev_id)
-	  if (BLOCK_MINOR_VERSION_1 == minor_version)
+	  if (BLOCK_MAJOR_VERSION_1 != major_version)
       {
         FIELD(nonce)
       }
