@@ -96,17 +96,17 @@ Handle<Value> convert_blob(const Arguments& args) {
     if (!parse_and_validate_block_from_blob(input, b))
         return except("Failed to parse block (convert_blob)");
 
-    if (b.major_version == BLOCK_MAJOR_VERSION_2 || b.major_version == BLOCK_MAJOR_VERSION_3) {
+    if (b.major_version == BLOCK_MAJOR_VERSION_1 || b.major_version > BLOCK_MAJOR_VERSION_3) {
+        if (!get_block_hashing_blob(b, output))
+            return except("Failed to create mining block");
+    } else {
         block parent_block;
         if (!construct_parent_block(b, parent_block))
             return except("Failed to construct parent block");
 
         if (!get_block_hashing_blob(parent_block, output))
             return except("Failed to create mining block");
-    } else {
-        if (!get_block_hashing_blob(b, output))
-           return except("Failed to create mining block");
-    }
+    }  
 
     Buffer* buff = Buffer::New(output.data(), output.size());
     return scope.Close(buff->handle_);
