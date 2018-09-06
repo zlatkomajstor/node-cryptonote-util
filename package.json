@@ -1,5 +1,5 @@
 {
-    "name": "cryptonote-util",
+    "name": "forknote-util",
     "version": "0.0.1",
     "main": "cryptonote",
     "author": {
@@ -11,7 +11,8 @@
         "url": "https://github.com/LucasJones/node-cryptonote-util.git"
     },
     "dependencies" : {
-        "bindings" : "*"
+        "bindings" : "*",
+        "nan" : "2"
     },
     "keywords": [
         "cryptonight",
