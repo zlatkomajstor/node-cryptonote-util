@@ -736,7 +736,14 @@ namespace cryptonote
     blobdata bd;
     if(!get_block_hashing_blob(b, bd))
       return false;
-    crypto::cn_slow_hash(bd.data(), bd.size(), res);
+    
+    if (BLOCK_MAJOR_VERSION_5 < b.major_version)
+    {
+      crypto::cn_slow_hash(bd.data(), bd.size(), res);
+    } else {
+      rainforest_hash(bd.data(), res, bd.size());
+    }
+
     return true;
   }
   //---------------------------------------------------------------

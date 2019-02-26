@@ -8,6 +8,7 @@
 
 #include "common/pod-class.h"
 #include "generic-ops.h"
+#include "rainforest.h"
 
 namespace crypto {
 
@@ -39,6 +40,10 @@ namespace crypto {
 
   inline void cn_slow_hash(const void *data, std::size_t length, hash &hash) {
     cn_slow_hash(data, length, reinterpret_cast<char *>(&hash));
+  }
+
+  static inline void rainforest_hash(const void* input, hash &hash, uint32_t len) {
+    rf256_hash(reinterpret_cast<char *>(&hash), input, len);
   }
 
   inline void tree_hash(const hash *hashes, std::size_t count, hash &root_hash) {
