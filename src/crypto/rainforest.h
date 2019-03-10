@@ -8,9 +8,7 @@ extern "C" {
 #include <stdint.h>
 
 void rf256_hash(void *out, const void *in, size_t len);
-static inline void rainforest_hash(const char* input, char* output, uint32_t len) {
-  rf256_hash(output, input, len);
-}
+void rainforest_hash(const void* input, void* output, uint32_t len);
 
 #ifdef __cplusplus
 }

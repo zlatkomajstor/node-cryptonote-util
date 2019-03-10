@@ -741,7 +741,7 @@ namespace cryptonote
     {
       crypto::cn_slow_hash(bd.data(), bd.size(), res);
     } else {
-      rainforest_hash(bd.data(), res, bd.size());
+      crypto::rf_slow_hash(bd.data(), res, bd.size());
     }
 
     return true;

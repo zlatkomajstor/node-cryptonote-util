@@ -42,8 +42,8 @@ namespace crypto {
     cn_slow_hash(data, length, reinterpret_cast<char *>(&hash));
   }
 
-  static inline void rainforest_hash(const void* input, hash &hash, uint32_t len) {
-    rf256_hash(reinterpret_cast<char *>(&hash), input, len);
+  inline void rf_slow_hash(const void* data, hash &hash, uint32_t len) {
+    rainforest_hash(reinterpret_cast<char *>(&data), reinterpret_cast<char *>(&hash), len);
   }
 
   inline void tree_hash(const hash *hashes, std::size_t count, hash &root_hash) {
