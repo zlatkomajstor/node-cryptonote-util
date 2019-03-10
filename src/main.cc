@@ -273,7 +273,7 @@ NAN_METHOD(rainforest_longhash) {
 		return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
 
 	blobdata input = std::string(Buffer::Data(target), Buffer::Length(target));
-	crypto::hash& output = null_hash;
+	crypto::hash output = null_hash;
 
 	rainforest_hash(input.data(), output, input.size());
 
